@@ -1,58 +1,345 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Taller 7 - Laravel Breeze, relaciones muchos a muchos y dashboard
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Objetivo
 
-## About Laravel
+Desarrollar una aplicación en Laravel con autenticación mediante Laravel Breeze, conexión a MariaDB con XAMPP y manejo de una relación muchos a muchos entre personas e intereses.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+El sistema permite registrar usuarios, iniciar sesión y crear intereses en un dashboard protegido.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Capturas de evidencia
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Captura 1 — Instalación de Laravel Breeze
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+![Captura 1](capturas/1.png)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Se muestra la instalación de Laravel Breeze y la generación de los archivos necesarios para el sistema de autenticación.
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Captura 2 — Creación de modelos, migraciones y controladores
 
-```bash
-composer require laravel/boost --dev
+![Captura 2](capturas/2.png)
 
-php artisan boost:install
+Se crean los modelos `Persona` e `Interes`, sus migraciones, controladores y la migración pivote `interes_persona`.
+
+---
+
+### Captura 3 — Configuración de rutas
+
+![Captura 3](capturas/3.png)
+
+Se muestra el archivo `routes/web.php` con las rutas protegidas para `personas`, `intereses`, `usuarios` y `dashboard`.
+
+---
+
+### Captura 4 — Registro de usuario
+
+![Captura 4](capturas/4.png)
+
+Se muestra la pantalla de registro generada por Laravel Breeze, donde se crea un usuario del sistema.
+
+---
+
+### Captura 5 — Dashboard inicial
+
+![Captura 5](capturas/5.png)
+
+Se muestra el dashboard después de iniciar sesión, con el menú lateral y las tarjetas estadísticas.
+
+---
+
+### Captura 6 — Registro de interés
+
+![Captura 6](capturas/6.png)
+
+Se muestra el formulario para registrar un nuevo interés con nombre y descripción.
+
+---
+
+### Captura 7 — Dashboard actualizado
+
+![Captura 7](capturas/7.png)
+
+Se muestra el dashboard actualizado después de registrar un interés, evidenciando el conteo correcto de datos.
+
+---
+
+## Tecnologías utilizadas
+
+| Tecnología | Uso |
+|---|---|
+| Laravel 13 | Framework principal del proyecto. |
+| PHP | Lenguaje base de la aplicación. |
+| Composer | Instalación de dependencias PHP. |
+| Laravel Breeze | Autenticación de usuarios. |
+| MariaDB | Base de datos del proyecto. |
+| XAMPP | Entorno local para MariaDB y phpMyAdmin. |
+| Blade | Motor de plantillas de Laravel. |
+| Tailwind CSS | Estilos de la interfaz. |
+| Vite | Compilación de assets. |
+| Artisan | Comandos de Laravel. |
+
+---
+
+## Archivos principales
+
+| Archivo | Función |
+|---|---|
+| `app/Models/Persona.php` | Modelo de personas. |
+| `app/Models/Interes.php` | Modelo de intereses. |
+| `app/Http/Controllers/PersonaController.php` | Controlador para registrar personas. |
+| `app/Http/Controllers/InteresController.php` | Controlador para registrar intereses. |
+| `app/Http/Controllers/UserController.php` | Controlador para listar usuarios. |
+| `app/Http/Controllers/DashboardController.php` | Controlador de estadísticas del dashboard. |
+| `resources/views/layouts/plantilla.blade.php` | Plantilla principal. |
+| `resources/views/layouts/sidebar.blade.php` | Menú lateral. |
+| `resources/views/personas/create.blade.php` | Vista para crear personas. |
+| `resources/views/intereses/create.blade.php` | Vista para crear intereses. |
+| `resources/views/usuarios/index.blade.php` | Vista de gestión de usuarios. |
+| `resources/views/dashboard.blade.php` | Vista principal del dashboard. |
+| `routes/web.php` | Definición de rutas. |
+| `.env` | Configuración de conexión a la base de datos. |
+
+---
+
+## Configuración de base de datos
+
+En el archivo `.env` se configuró la conexión a MariaDB:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ejemploseg
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+La base de datos `ejemploseg` debe estar creada previamente en phpMyAdmin.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Migraciones principales
 
-## Code of Conduct
+### Tabla `personas`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```php
+Schema::create('personas', function (Blueprint $table) {
+    $table->id();
+    $table->string('nombre');
+    $table->string('email')->unique();
+    $table->timestamps();
+});
+```
 
-## Security Vulnerabilities
+### Tabla `intereses`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```php
+Schema::create('intereses', function (Blueprint $table) {
+    $table->id();
+    $table->string('nombre');
+    $table->string('descripcion')->nullable();
+    $table->timestamps();
+});
+```
 
-## License
+### Tabla pivote `interes_persona`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```php
+Schema::create('interes_persona', function (Blueprint $table) {
+    $table->id();
+
+    $table->foreignId('persona_id')
+        ->constrained('personas')
+        ->onDelete('cascade');
+
+    $table->foreignId('interes_id')
+        ->constrained('intereses')
+        ->onDelete('cascade');
+
+    $table->timestamps();
+});
+```
+
+Esta tabla permite relacionar varias personas con varios intereses.
+
+---
+
+## Relaciones de los modelos
+
+### Modelo `Persona`
+
+```php
+public function intereses()
+{
+    return $this->belongsToMany(
+        Interes::class,
+        'interes_persona',
+        'persona_id',
+        'interes_id'
+    );
+}
+```
+
+### Modelo `Interes`
+
+```php
+protected $table = 'intereses';
+
+public function personas()
+{
+    return $this->belongsToMany(
+        Persona::class,
+        'interes_persona',
+        'interes_id',
+        'persona_id'
+    );
+}
+```
+
+La propiedad `$table = 'intereses'` evita que Laravel busque una tabla llamada `interes`.
+
+---
+
+## Rutas principales
+
+```php
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('personas', PersonaController::class);
+    Route::resource('intereses', InteresController::class);
+
+    Route::get('/usuarios', [UserController::class, 'index'])
+        ->name('usuarios.index');
+});
+```
+
+Rutas usadas durante el taller:
+
+```text
+http://localhost:8000/register
+http://localhost:8000/login
+http://localhost:8000/dashboard
+http://localhost:8000/intereses/create
+http://localhost:8000/personas/create
+http://localhost:8000/usuarios
+```
+
+---
+
+## Funcionamiento general
+
+El usuario se registra o inicia sesión mediante Laravel Breeze.  
+Después accede al dashboard, donde se muestran los totales de personas, intereses y usuarios registrados.
+
+Desde el menú lateral se puede crear un interés, registrar una persona y consultar la gestión de usuarios.  
+Cuando se registra una persona, se pueden seleccionar intereses previamente creados, guardando la relación en la tabla pivote `interes_persona`.
+
+---
+
+## Controladores principales
+
+### `DashboardController`
+
+```php
+public function index()
+{
+    $totalPersonas = Persona::count();
+    $totalIntereses = Interes::count();
+    $totalUsuarios = User::count();
+
+    return view('dashboard', compact(
+        'totalPersonas',
+        'totalIntereses',
+        'totalUsuarios'
+    ));
+}
+```
+
+### `InteresController`
+
+```php
+public function store(Request $request)
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'descripcion' => 'nullable|string',
+    ]);
+
+    Interes::create($request->all());
+
+    return redirect()
+        ->route('intereses.create')
+        ->with('success', 'Interés creado exitosamente.');
+}
+```
+
+### `PersonaController`
+
+```php
+public function store(Request $request)
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'email' => 'required|email|unique:personas',
+        'intereses' => 'array',
+    ]);
+
+    $persona = Persona::create($request->only('nombre', 'email'));
+
+    if ($request->has('intereses')) {
+        $persona->intereses()->attach($request->intereses);
+    }
+
+    return redirect()
+        ->route('personas.create')
+        ->with('success', 'Persona creada exitosamente.');
+}
+```
+
+---
+
+## Ejecución del proyecto
+
+Instalar dependencias:
+
+```bash
+composer install
+npm install
+```
+
+Compilar recursos:
+
+```bash
+npm run build
+```
+
+Ejecutar migraciones:
+
+```bash
+php artisan migrate
+```
+
+Levantar el servidor:
+
+```bash
+php artisan serve
+```
+
+Abrir en el navegador:
+
+```text
+http://localhost:8000
+```
+
+---
+
+## Autor
+
+Juan Diego Sotomayor
